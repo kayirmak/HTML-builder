@@ -10,7 +10,17 @@ async function copy() {
     }
     
     const files = await readdir(path.resolve(__dirname, 'files'), {withFileTypes: true})
+    const filesCopy = await readdir(path.resolve(__dirname, 'files-copy'), {withFileTypes: true})
 
+    filesCopy.forEach(el => {
+        fs.unlink(path.resolve(__dirname, 'files-copy', el.name), err => {
+            if (err) {
+                stdout.write('Файл удален')
+                throw err
+            }
+        })
+    })
+    
     files.forEach(el => {
         copyFile(path.resolve(__dirname, 'files', el.name), `${__dirname}/files-copy/${el.name}`, fs.constants.COPYFILE_EXCL).then(res => {
             stdout.write('Файл скопирован\n')

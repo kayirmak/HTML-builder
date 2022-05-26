@@ -13,7 +13,7 @@ async function mergeStyles() {
         if (path.extname(el.name) === '.css') {
             
             readFile = fs.createReadStream(path.resolve(__dirname, 'styles', el.name), 'utf-8')
-            readFile.on('data', chunk => data += chunk)
+            readFile.on('data', chunk => data += chunk + '\n')
             readFile.on('error', err => console.error(err.message))
         }
         

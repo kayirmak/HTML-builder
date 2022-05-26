@@ -26,11 +26,9 @@ stdin.on('data', data => {
         if (error) throw error
         stdout.write('Запись добавлена, для завершения процесса введи "exit"\n')
     })
-    // process.openStdin().on('keypress', function (chunk, key) {
-    //     if (key && key.ctrl && key.name == 'c') {
-    //         console.log('bye');
-    //         process.exit()
-    //     }
-    // })
+    
 })
-process.on('exit', () => stdin.write('Пока'))
+process.on('SIGINT', () => {
+    stdout.write('Спасибо, у тебя хороший вкус, хотя о вкусах не спорят');
+    process.exit();
+  });
